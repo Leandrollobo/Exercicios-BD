@@ -1,0 +1,97 @@
+A importancia da criptografia:
+
+Imagine o funcionamento de um sistema de vendas onde CPFs, senhas e números de cartões de crédito são algumas das informações confidenciais mantidas durante toda a construção desse sistema. Esses dados exigem uma segurança adicional que garanta a integridade e a confidencialidade dos documentos.
+
+Para isso, técnicas de criptografia são usadas. Elas alteram o material original para ocultá-lo de usuários indesejados e os revela apenas para quem possui permissão prévia
+
+É necessário compreender três partes importantes da SQL para o uso do seu mecanismo de criptografia:
+
+chave mestra;
+
+certificado;
+
+​chaves simétrica e assimétrica.
+
+
+A chave mestra
+
+A chave mestra é a raiz hierárquica da criptografia do SQL. Ela representa uma chave exclusiva para cada banco de dados e é utilizada para proteger as chaves privadas de certificados, as assimétricas e as simétricas.
+
+
+É possível gerar uma chave mestra, que requer uma senha, usando o seguinte comando:
+
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'senha'
+
+
+O certificado
+
+O certificado é o segundo item na hierarquia de criptografia do SQL. Ele é responsável por proteger as chaves simétricas e assimétricas.
+
+ 
+
+No certificado, é importante ter uma chave mestra com senha, que será usada para proteger os objetos abaixo dela na hierarquia.
+
+
+Segue o comando para a criação do certificado:
+
+CREATE CERTIFICATE MeuCertificado
+
+ENCRYPTION BY PASSWORD = 'SENHA@123'
+
+WITH SUBJECT = 'Meu Certificado'
+
+
+A chave simétrica
+
+A chave simétrica é usada para criptografar e descriptografar dados no banco de dados. Quando for produzida, ela deve ser criptografada com um certificado, uma senha e outra chave, sendo ela simétrica ou assimétrica.
+
+ 
+
+É necessário conhecer algum método de criptografia que especifique como os dados se tornam ilegíveis para indivíduos não autorizados.
+
+ 
+
+As alternativas para esse parâmetro são:
+
+DES, TRIPLE_DES, TRIPLE_DES_3KEY, RC2, RC4, RC4_128, DESX, AES_128, AES_192 e AES_256.
+
+
+A chave simétrica
+Para criar uma chave simétrica com o algoritmo AES 256 e criptografá-la com um certificado, usamos o seguinte comando:
+
+CREATE SYMMETRIC KEY MinhaChave
+
+WITH ALGORITHM = AES_256
+
+ENCRYPTION BY CERTIFICATE MeuCertificado
+
+
+Como descriptografar?
+
+Para descriptografar esses dados e visualizar o valor real no campo de senha, é necessário reabrir a chave simétrica, ler esse campo com a função DECRYPTBYKEY, converter o valor para varchar e fechar a chave.
+
+ 
+
+Para isso, utilizamos a seguinte sintaxe:
+
+OPEN SYMMETRIC KEY ChaveSenha
+
+DECRYPTION BY CERTIFICATE Certificado
+
+GO
+
+SELECT    *    senhadescriptografada = CAST (DECRYPTBYKEY(SENHA) AS varchar(50))
+
+FROM Usuario
+
+CLOSE SYMMETRIC KEY ChaveSenha
+
+
+Conclusão
+
+É importante manter os dados criptografados, evitando que informações importantes sejam acessadas por pessoas indesejadas, que possam ter a intenção de fazer um mau uso de informações de terceiros.
+
+ 
+
+Por isso, é sempre indicado criar uma senha forte, mesclada de números, letras e caracteres especiais e que não contenha dados pessoais, como a data de nascimento.
+
