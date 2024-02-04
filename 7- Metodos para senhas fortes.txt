@@ -1,0 +1,22 @@
+No ano de 2022, diversas empresas sofreram tentativas de ataques cibernéticos que poderiam impactar
+ diretamente a segurança dos dados. Portanto, é recomendado que funcionários e clientes de lojas
+ virtuais sempre mantenham suas senhas de acesso atualizadas, alterando-as a cada três meses.
+ Pensando nisso, cite pelo menos três métodos para melhorar essas senhas, com foco em fortalecê-las.
+
+
+--
+Metodos interessantes para criação de senhas fortes:
+Complexidade de senha:
+-Senhas com muitos caracteres maiusculos e minusculos.
+-Senhas com caracteres especiais letras e numeros.
+-Um metodo interessante para nós brasileiros que temos em nosso alfabeto o Ç é utiliza-lo
+em sistemas que permitam esse caractere nos campos de senha, pois não é comum em todo o mundo este
+simbolo tornando mais dificil um tipo de acesso manual.
+
+Comprimento de sennha:
+Senhas longas são mais dificeis de quebrar/descobrir usando metodos de força bruta que é quando
+um algoritmo testa milhares de combinações até advinhar a sua combinação. procure usar muitos caracteres
+frases com caracteres maisculos, minusculos, simbolos, numeros.
+
+Autenticação de dois fatores 2FA:
+sempre que possivel implemente e utilize a autenticação de dois fatores.
